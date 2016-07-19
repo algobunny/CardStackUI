@@ -19,7 +19,7 @@ class CardFrameLayout extends FrameLayout {
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         CardStackAdapter mAdapter = parent.getAdapter();
         if (mAdapter != null) {
-            int height = (int) (mAdapter.getFullCardHeight() + (mAdapter.getCount() - 1) * parent.getCardGap());
+            int height = (int) (mAdapter.getFullCardHeight() + mAdapter.getTotalHeight());
             heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY);
         }
 

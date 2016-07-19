@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     card_view:cardCornerRadius="6dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardElevation="6dp"
+    android:layout_marginTop="@dimen/padding_small"
+    android:layout_marginBottom="@dimen/padding_small"
+    card_view:cardElevation="3dp"
     android:layout_height="match_parent">
 
     <TextView
@@ -15,10 +17,6 @@
         android:layout_height="wrap_content"
         android:padding="16dp"
         tools:text="Card 1"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="2"
-        android:shadowColor="@android:color/black"
         android:textColor="@android:color/white"
         android:textStyle="bold"
         android:textSize="24sp" />

@@ -264,4 +264,8 @@ public class CardStackLayout extends ScrollView {
         void onCardSelected(View v, int position);
     }
 
+    public float getTotalHeight(){
+        return 0;
+    }
+
 }

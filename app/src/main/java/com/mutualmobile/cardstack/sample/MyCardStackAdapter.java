@@ -21,7 +21,13 @@ import com.mutualmobile.cardstack.sample.utils.Logger;
 import com.tramsun.libs.prefcompat.Pref;
 
 public class MyCardStackAdapter extends CardStackAdapter implements CompoundButton.OnCheckedChangeListener {
-    private static int[] bgColorIds;
+    //private static int[] bgColorIds;
+
+    private static ModelA[] collect;
+
+    private static final float SMALL_GAP = 40;
+    private static final float LARGE_GAP = 100;
+
     private final LayoutInflater mInflater;
     private final Context mContext;
     private Logger log = new Logger(MyCardStackAdapter.class.getSimpleName());
@@ -33,27 +39,31 @@ public class MyCardStackAdapter extends CardStackAdapter implements CompoundButt
         mContext = activity;
         mInflater = LayoutInflater.from(activity);
         mCallback = activity;
-        bgColorIds = new int[]{
-                R.color.card1_bg,
-                R.color.card2_bg,
-                R.color.card3_bg,
-                R.color.card4_bg,
-                R.color.card5_bg,
-                R.color.card6_bg,
-                R.color.card7_bg,
-                R.color.card1_bg,
-                R.color.card2_bg,
-                R.color.card3_bg,
-                R.color.card4_bg,
-                R.color.card5_bg,
-                R.color.card6_bg,
-                R.color.card7_bg,
+        collect = new ModelA[]{
+                new ModelA(R.color.card1_bg, SMALL_GAP),
+                new ModelA(R.color.orange, LARGE_GAP),
+                new ModelA(R.color.card2_bg, SMALL_GAP),
+                new ModelA(R.color.dark_green, SMALL_GAP),
+                new ModelA(R.color.dirty_green, SMALL_GAP),
+                new ModelA(R.color.teal, LARGE_GAP),
+                new ModelA(R.color.dark_blue, SMALL_GAP),
+                new ModelA(R.color.indigo, SMALL_GAP),
+                new ModelA(R.color.violet, SMALL_GAP),
+                new ModelA(R.color.card6_bg, LARGE_GAP),
+                new ModelA(R.color.card5_bg, SMALL_GAP),
+                new ModelA(R.color.red, SMALL_GAP),
+                new ModelA(R.color.rose, SMALL_GAP),
+                new ModelA(R.color.pastel_magenta, SMALL_GAP)
         };
     }
 
     @Override
     public int getCount() {
-        return bgColorIds.length;
+        return collect.length;
+    }
+
+    public ModelA getItem(int position){
+        return collect[position];
     }
 
     @Override
@@ -75,10 +85,10 @@ public class MyCardStackAdapter extends CardStackAdapter implements CompoundButt
 
     @Override
     public View createView(int position, ViewGroup container) {
-        if (position == 0) return getSettingsView(container);
+        //if (position == 0) return getSettingsView(container);
 
         CardView root = (CardView) mInflater.inflate(R.layout.card, container, false);
-        root.setCardBackgroundColor(ContextCompat.getColor(mContext, bgColorIds[position]));
+        root.setCardBackgroundColor(ContextCompat.getColor(mContext, collect[position].bgColor));
         TextView cardTitle = (TextView) root.findViewById(R.id.card_title);
         cardTitle.setText(mContext.getResources().getString(R.string.card_title, position));
         return root;
@@ -102,7 +112,7 @@ public class MyCardStackAdapter extends CardStackAdapter implements CompoundButt
 
     private View getSettingsView(ViewGroup container) {
         CardView root = (CardView) mInflater.inflate(R.layout.settings_card, container, false);
-        root.setCardBackgroundColor(ContextCompat.getColor(mContext, bgColorIds[0]));
+        root.setCardBackgroundColor(ContextCompat.getColor(mContext, R.color.card1_bg));
 
         final Switch showInitAnimation = (Switch) root.findViewById(R.id.show_init_animation);
         final Switch parallaxEnabled = (Switch) root.findViewById(R.id.parallax_enabled);
@@ -189,4 +199,25 @@ public class MyCardStackAdapter extends CardStackAdapter implements CompoundButt
         }
     }
 
+    @Override
+    public float getTotalHeight(){
+        float height = 0;
+        for(int i=0; i <collect.length; i++){
+            height += collect[i].spacing;
+        }
+        return height;
+    }
+
+    private float getHeightUntil(int position){
+        float height = 0;
+        for(int i=0; i<position; i++){
+            height += collect[i].spacing;
+        }
+        return height;
+    }
+
+    @Override
+    protected float getCardOriginalY(int position) {
+        return mParentPaddingTop + getHeightUntil(position);
+    }
 }

@@ -57,7 +57,7 @@ public abstract class CardStackAdapter implements View.OnTouchListener, View.OnC
     private float mTouchDistance = 0;
     private int mSelectedCardPosition = INVALID_CARD_POSITION;
     private float scaleFactorForElasticEffect;
-    private int mParentPaddingTop = 0;
+    protected int mParentPaddingTop = 0;
     private int mCardPaddingInternal = 0;
 
     public CardStackAdapter(Context context) {
@@ -94,6 +94,8 @@ public abstract class CardStackAdapter implements View.OnTouchListener, View.OnC
      * @return cardCount - Number of views in the related {@link CardStackLayout}
      */
     public abstract int getCount();
+
+    public abstract float getTotalHeight();
 
     /**
      * Returns true if no animation is in progress currently. Can be used to disable any events
@@ -356,4 +358,5 @@ public abstract class CardStackAdapter implements View.OnTouchListener, View.OnC
 
         return mCardViews[position];
     }
+
 }
