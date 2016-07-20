@@ -5,11 +5,16 @@ package com.mutualmobile.cardstack.sample;
  */
 public class ModelA {
 
-    public final int bgColor;
-    public final float spacing;
+    public enum Section {
+        MERCURY, MARS, JUPITER, VENUS
+    }
 
-    public ModelA(int bgColor, float spacing){
+    public final int bgColor;
+    public final Section section;
+    //public final float spacing;
+
+    public ModelA(int bgColor, Section seciton){
         this.bgColor = bgColor;
-        this.spacing = spacing;
+        this.section = seciton;
     }
 }

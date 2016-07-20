@@ -40,20 +40,23 @@ public class MyCardStackAdapter extends CardStackAdapter implements CompoundButt
         mInflater = LayoutInflater.from(activity);
         mCallback = activity;
         collect = new ModelA[]{
-                new ModelA(R.color.card1_bg, SMALL_GAP),
-                new ModelA(R.color.orange, LARGE_GAP),
-                new ModelA(R.color.card2_bg, SMALL_GAP),
-                new ModelA(R.color.dark_green, SMALL_GAP),
-                new ModelA(R.color.dirty_green, SMALL_GAP),
-                new ModelA(R.color.teal, LARGE_GAP),
-                new ModelA(R.color.dark_blue, SMALL_GAP),
-                new ModelA(R.color.indigo, SMALL_GAP),
-                new ModelA(R.color.violet, SMALL_GAP),
-                new ModelA(R.color.card6_bg, LARGE_GAP),
-                new ModelA(R.color.card5_bg, SMALL_GAP),
-                new ModelA(R.color.red, SMALL_GAP),
-                new ModelA(R.color.rose, SMALL_GAP),
-                new ModelA(R.color.pastel_magenta, SMALL_GAP)
+                new ModelA(R.color.card1_bg, ModelA.Section.VENUS),
+                new ModelA(R.color.orange, ModelA.Section.VENUS),
+
+                new ModelA(R.color.card2_bg, ModelA.Section.JUPITER),
+                new ModelA(R.color.dark_green, ModelA.Section.JUPITER),
+                new ModelA(R.color.dirty_green, ModelA.Section.JUPITER),
+                new ModelA(R.color.teal, ModelA.Section.JUPITER),
+
+                new ModelA(R.color.dark_blue, ModelA.Section.MERCURY),
+                new ModelA(R.color.indigo, ModelA.Section.MERCURY),
+                new ModelA(R.color.violet, ModelA.Section.MERCURY),
+                new ModelA(R.color.card6_bg, ModelA.Section.MERCURY),
+
+                new ModelA(R.color.card5_bg, ModelA.Section.MARS),
+                new ModelA(R.color.red, ModelA.Section.MARS),
+                new ModelA(R.color.rose, ModelA.Section.MARS),
+                new ModelA(R.color.pastel_magenta, ModelA.Section.MARS)
         };
     }
 
@@ -199,11 +202,21 @@ public class MyCardStackAdapter extends CardStackAdapter implements CompoundButt
         }
     }
 
+    private float getCardPreviewHeight(int i){
+        if(i == collect.length-1){
+            return this.getFullCardHeight();
+        }
+
+        ModelA next = collect[i+1];
+        ModelA current = collect[i];
+        return next.section==current.section ? SMALL_GAP : LARGE_GAP;
+    }
+
     @Override
     public float getTotalHeight(){
         float height = 0;
         for(int i=0; i <collect.length; i++){
-            height += collect[i].spacing;
+            height += getCardPreviewHeight(i);
         }
         return height;
     }
@@ -211,7 +224,7 @@ public class MyCardStackAdapter extends CardStackAdapter implements CompoundButt
     private float getHeightUntil(int position){
         float height = 0;
         for(int i=0; i<position; i++){
-            height += collect[i].spacing;
+            height += getCardPreviewHeight(i);
         }
         return height;
     }
